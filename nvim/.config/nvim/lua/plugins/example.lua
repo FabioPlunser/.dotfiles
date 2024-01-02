@@ -9,6 +9,10 @@ if true then return {} end
 -- * disable/enabled LazyVim plugins
 -- * override the configuration of LazyVim plugins
 return {
+  {
+    "neo-tree.nvim",
+    enabled = false,
+  },
   -- add gruvbox
   { "ellisonleao/gruvbox.nvim" },
 
