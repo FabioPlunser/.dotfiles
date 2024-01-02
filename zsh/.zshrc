@@ -138,6 +138,7 @@ source /Users/fabioplunser/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f "/Users/fabioplunser/.ghcup/env" ] && source "/Users/fabioplunser/.ghcup/env" # ghcup-envexport PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
+bindkey -s ^f "tmux-sessionizer\n"
 # pnpm
 export PNPM_HOME="/Users/fabioplunser/.local/share/pnpm"
 case ":$PATH:" in
