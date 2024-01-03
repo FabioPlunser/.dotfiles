@@ -45,3 +45,5 @@ end, opts)
 -- Comment
 vim.api.nvim_set_keymap("n", "<C-k>", "gcc", opts)
 vim.api.nvim_set_keymap("v", "<C-k>", "gc", opts)
+
+vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
