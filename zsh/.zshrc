@@ -1,10 +1,10 @@
-source ~/zsh-snap/znap.zsh
+source ~/.zsh/zsh-snap/znap.zsh
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+#fi
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -111,34 +111,27 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias mydocker="docker exec -it 7080da83a522f31146c16386077b02f538c7f3dbe2068295666e2008945c4a15 bash"
-alias SA="cd ~/Meine\ Ablage/Uni/2.Semester/Softwarearchitektur"
-alias DBS="cd ~/Meine\ Ablage/Uni/2.Semester/Datenbanksysteme"
-alias RA="cd ~/Meine\ Ablage/Uni/2.Semester/Rechnerarchitektur"
-alias SAP="cd ~/Desktop/SoftArchProject"
-alias ETI="cd ~/Meine\ Ablage/Uni/2.Semester/ETI"
-alias FP="cd ~/Meine\ Ablage/Uni/2.Semester/FunktionaleProgrammierung"
-alias LA="cd ~/Meine\ Ablage/Uni/2.Semester/LineareAlgebra"
-alias Uni="cd ~/Meine\ Ablage/Uni/2.Semester"
-alias Google="cd ~/Meine\ Ablage/"
-alias Portfolio="cd ~/Desktop/Portfolio"
-alias uibk="cd ~/Desktop/uibkhelp"
-alias swe="cd ~/Desktop/SWE"
-alias wiki="cd ~/Desktop/SWEWiki"
-alias backend="cd ~/Desktop/SWE/backend"
-alias frontend="cd ~/Desktop/SWE/frontend/"
-alias start="pnpm run dev"
-alias gb="gradle bootRun"
-alias ga="gradle assemble -t"
-alias vim="nvim"
-alias personal="cd ~/Meine\ Ablage/personal"
+alias personal="cd ~/Nextcloud/personal"
+alias uni="cd ~/Nextcloud/Uni/"
+alias g="git"
+alias gs="git status"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 source /Users/fabioplunser/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f "/Users/fabioplunser/.ghcup/env" ] && source "/Users/fabioplunser/.ghcup/env" # ghcup-envexport PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
-bindkey -s ^f "tmux-sessionizer\n"
+function cdProject() {
+    local dir=$(~/.config/scripts/projectFuzzyFind)
+    if [[ -n $dir ]]; then
+        cd "$dir"
+        clear
+    fi
+}
+
+bindkey -s ^f "~/.config/scripts/tmux-sessionizer\n"
+bindkey -s ^p "cdProject\n"
+
 # pnpm
 export PNPM_HOME="/Users/fabioplunser/.local/share/pnpm"
 case ":$PATH:" in
@@ -147,7 +140,8 @@ case ":$PATH:" in
 esac
 # pnpm end
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ./zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
@@ -160,3 +154,22 @@ eval "$(pyenv init --path)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c/sbin:$PATH"
+export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.1/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.1/sbin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.1/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@8.1/sbin:$PATH"
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="/opt/homebrew/opt/php@7.4/bin:$PATH"
+export PATH="/opt/homebrew/opt/php@7.4/sbin:$PATH"
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
