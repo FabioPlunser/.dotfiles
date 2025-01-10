@@ -129,8 +129,16 @@ function cdProject() {
     fi
 }
 
+function find_and_cd() {
+  local dir
+  dir=$(find . -type d 2>/dev/null | fzf --preview 'tree -C {} | head -100') || return
+  cd "$dir"
+}
+
+
 bindkey -s ^f "~/.config/scripts/tmux-sessionizer\n"
 bindkey -s ^p "cdProject\n"
+bindkey -s ^d "find_and_cd\n"
 
 # pnpm
 export PNPM_HOME="/Users/fabioplunser/.local/share/pnpm"
