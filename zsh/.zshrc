@@ -1,4 +1,6 @@
-source ~/.zsh/zsh-snap/znap.zsh
+zmodload zsh/zprof
+set -o ignoreeof
+eval $(ssh-agent)
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -80,8 +82,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
-	zsh-syntax-highlighting
-	zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -117,7 +117,6 @@ alias g="git"
 alias gs="git status"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source /Users/fabioplunser/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f "/Users/fabioplunser/.ghcup/env" ] && source "/Users/fabioplunser/.ghcup/env" # ghcup-envexport PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
@@ -135,10 +134,19 @@ function find_and_cd() {
   cd "$dir"
 }
 
+fzf_history_search(){
+    local selected=$(history 1 | fzf --reverse | sed 's/^[ ]*[0-9]*[ ]*//')
+    
+    # If a selection is made, execute it
+    if [[ -n $selected ]]; then
+        zle reset-prompt # Clear current command line
+        print -z "$selected" # Pre-fill selected command
+    fi
+}
 
-bindkey -s ^f "~/.config/scripts/tmux-sessionizer\n"
 bindkey -s ^p "cdProject\n"
 bindkey -s ^d "find_and_cd\n"
+bindkey -s ^h "fzf_history_search\n"
 
 # pnpm
 export PNPM_HOME="/Users/fabioplunser/.local/share/pnpm"
@@ -147,14 +155,8 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv init --path)"
 
 # bun completions
 [ -s "/Users/fabioplunser/.bun/_bun" ] && source "/Users/fabioplunser/.bun/_bun"
