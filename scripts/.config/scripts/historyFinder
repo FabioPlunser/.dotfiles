@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Check if an argument is passed
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    # Use the shell history as input for fzf
+    selected=$(history | fzf | awk '{$1=""; print $0}' | sed 's/^ *//')
+fi
+
+# Exit if no selection is made
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+# Output the selected history command
+echo "$selected"
+
+# Optionally, execute the selected command
+# Uncomment the next line to enable execution
+# eval "$selected"
