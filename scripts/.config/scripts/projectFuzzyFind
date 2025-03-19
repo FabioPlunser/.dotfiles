@@ -6,9 +6,9 @@ else
 	selected=$((
   find ~/Nextcloud/work -maxdepth 2 -type d;
   find ~/Nextcloud/personal -maxdepth 2 -type d; 
-  find ~/Nextcloud/Uni/4.Semester -maxdepth 3 -type d;
-  find ~/Nextcloud/Uni/5.Semester -maxdepth 3 -type d;
+  find ~/Nextcloud/Uni -maxdepth 2 -type d; 
   find ~/Nextcloud/Uni/6.Semester -maxdepth 3 -type d;
+  find ~/Nextcloud/Uni/7.Semester -maxdepth 3 -type d;
   ) | fzf)
 fi
 
